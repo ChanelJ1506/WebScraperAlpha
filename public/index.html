@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Scraper</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #141B41;
+      color: #98B9F2;
+    }
+    h1 {
+      color: #918EF4;
+    }
+    #scrapeForm {
+      margin: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      border: 2px solid #306BAC;
+      border-radius: 5px;
+      background-color: #6F9CEB;
+      color: #141B41;
+    }
+    button {
+      padding: 10px;
+      background-color: #306BAC;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6F9CEB;
+    }
+    #output {
+      margin-top: 20px;
+      background-color: #141B41;
+      padding: 10px;
+      border-radius: 5px;
+      color: #918EF4;
+    }
+  </style>
+</head>
+<body>
+  <h1>Web Scraper</h1>
+  <form id="scrapeForm">
+    <input type="text" id="url" placeholder="Enter URL" required>
+    <button type="submit">Scrape</button>
+  </form>
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById('scrapeForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const url = document.getElementById('url').value;
+      const response = await fetch('/scrape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      const data = await response.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>
